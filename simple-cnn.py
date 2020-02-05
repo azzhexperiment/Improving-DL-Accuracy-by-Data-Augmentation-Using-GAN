@@ -41,13 +41,17 @@ np.random.seed(1)
 set_random_seed(2)
 
 model = Sequential()
-model.add(Conv2D(filters=32, kernel_size=(3, 3), activation="relu", padding="same", input_shape=(64, 64, 1)))
-model.add(Conv2D(filters=32, kernel_size=(3, 3), activation="relu", padding="same"))
+model.add(Conv2D(filters=32, kernel_size=(3, 3), activation="relu",
+                 padding="same", input_shape=(64, 64, 1)))
+model.add(Conv2D(filters=32, kernel_size=(3, 3),
+                 activation="relu", padding="same"))
 model.add(BatchNormalization())
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(rate=0.25))
-model.add(Conv2D(filters=64, kernel_size=(3, 3), activation="relu", padding="same"))
-model.add(Conv2D(filters=64, kernel_size=(3, 3), activation="relu", padding="same"))
+model.add(Conv2D(filters=64, kernel_size=(3, 3),
+                 activation="relu", padding="same"))
+model.add(Conv2D(filters=64, kernel_size=(3, 3),
+                 activation="relu", padding="same"))
 model.add(BatchNormalization())
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(rate=0.25))
@@ -57,30 +61,32 @@ model.add(BatchNormalization())
 model.add(Dropout(rate=0.4))
 model.add(Dense(2, activation="softmax"))
 
-model.compile(Adam(lr=0.001), loss="categorical_crossentropy", metrics=["accuracy"])
+model.compile(Adam(lr=0.001), loss="categorical_crossentropy",
+              metrics=["accuracy"])
 
 gen = ImageDataGenerator()
 train_batches = gen.flow_from_directory("chest_xray/chest_xray/train",
-model.input_shape[1:3],
-color_mode="grayscale",
+                                        model.input_shape[1:3],
+                                        color_mode="grayscale",
                                         shuffle=True,
-										seed=1,
-										batch_size=16)
+                                        seed=1,
+                                        batch_size=16)
 valid_batches = gen.flow_from_directory("chest_xray/chest_xray/val",
-model.input_shape[1:3],
-color_mode="grayscale",
+                                        model.input_shape[1:3],
+                                        color_mode="grayscale",
                                         shuffle=True,
-										seed=1,
-										batch_size=16)
+                                        seed=1,
+                                        batch_size=16)
 test_batches = gen.flow_from_directory("chest_xray/chest_xray/test",
-model.input_shape[1:3],
-shuffle=False,
+                                       model.input_shape[1:3],
+                                       shuffle=False,
                                        color_mode="grayscale",
-									   batch_size=8)
+                                       batch_size=8)
 
 model.fit_generator(train_batches, validation_data=valid_batches, epochs=3)
 
-model.compile(Adam(lr=0.0001), loss="categorical_crossentropy", metrics=["accuracy"])
+model.compile(Adam(lr=0.0001), loss="categorical_crossentropy",
+              metrics=["accuracy"])
 model.fit_generator(train_batches, validation_data=valid_batches, epochs=3)
 
 p = model.predict_generator(test_batches, verbose=True)
