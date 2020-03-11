@@ -1,7 +1,8 @@
 chest_xray
 E039.code-workspace
 chest-xray-pneumonia.zip
-sample/
-.idea/
-.ipynb_checkpoints/
-.vscode/
+.idea
+.ipynb_checkpoints
+.vscode
+0 MLDA.txt
+testing_subset
