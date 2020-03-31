@@ -8,3 +8,4 @@ chest-xray-pneumonia.zip
 testing_subset
 save/v7*/variables
 CNN_Final.pdf
+output/gan_pneumonia
